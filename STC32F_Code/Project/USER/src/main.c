@@ -30,39 +30,22 @@ void main()
 
     // 此处编写用户代码 例如外设初始化代码等
 
-    // ADC初始化
-    //  adc_init(ADC_P00,ADC_SYSclk_DIV_2);
-    //  adc_init(ADC_P01,ADC_SYSclk_DIV_2);
-    //  adc_init(ADC_P05,ADC_SYSclk_DIV_2);
-    //  adc_init(ADC_P06,ADC_SYSclk_DIV_2);
-    //  adc_init(ADC_P11,ADC_SYSclk_DIV_2);
-    //  adc_init(ADC_P13,ADC_SYSclk_DIV_2);
 
-    //Motor_PWM_Init();
-
-    // pwm_init(PWMB_CH1_P74, 50, 692);//舵机 最大765   最小625
-
-    //Encoder_Init();
-
-    // 六轴陀螺仪初始化
-    //  while(imu660ra_init())
-    //  {
-    //      delay_ms(500);
-    //      printf("imu660ra init try again.\r\n");
-    //  }
-
-    // dl1a_init();    //TOF DL1A 初始化
     BEEP_Init();
     lcd_init();    // 屏幕初始化
     eeprom_init(); // eeprom初始化
 
-    pit_timer_ms(TIM_4, 5); // 设置中断定时
+    //pit_timer_ms(TIM_4, 5); // 设置中断定时
 
     BEEP_ON_ms(100);
+    
+    ADCInit();
 
     while (1)
     {
         // 此处编写需要循环执行的代码
-        Keystroke_Menu();
+        //Keystroke_Menu();
+        
+        lcd_showint32(14 * 8, 3, ADC_Main(), 3);
     }
 }

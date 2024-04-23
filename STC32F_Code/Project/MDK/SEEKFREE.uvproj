@@ -734,6 +734,11 @@
               <FileType>5</FileType>
               <FilePath>..\USER\inc\beep.h</FilePath>
             </File>
+            <File>
+              <FileName>adc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\USER\inc\adc.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -768,6 +773,11 @@
               <FileName>beep.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\USER\src\beep.c</FilePath>
+            </File>
+            <File>
+              <FileName>adc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\USER\src\adc.c</FilePath>
             </File>
           </Files>
         </Group>
