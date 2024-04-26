@@ -56,7 +56,7 @@ void main()
     lcd_init();    // 屏幕初始化
     eeprom_init(); // eeprom初始化
 
-    pit_timer_ms(TIM_4, 5); // 设置中断定时
+    //pit_timer_ms(TIM_4, 5); // 设置中断定时
 
     BEEP_ON_ms(100);
 
