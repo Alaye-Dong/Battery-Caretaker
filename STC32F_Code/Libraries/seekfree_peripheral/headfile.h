@@ -56,5 +56,6 @@
 #include "eeprom.h"
 #include "beep.h"
 #include "dht11.h"
+#include "mq2.h"
 
 #endif

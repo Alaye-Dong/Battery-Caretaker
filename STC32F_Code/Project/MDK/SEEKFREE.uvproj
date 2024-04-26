@@ -739,6 +739,11 @@
               <FileType>5</FileType>
               <FilePath>..\USER\inc\dht11.h</FilePath>
             </File>
+            <File>
+              <FileName>mq2.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\USER\inc\mq2.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -778,6 +783,11 @@
               <FileName>dht11.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\USER\src\dht11.c</FilePath>
+            </File>
+            <File>
+              <FileName>mq2.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\USER\src\mq2.c</FilePath>
             </File>
           </Files>
         </Group>

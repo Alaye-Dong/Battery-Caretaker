@@ -145,10 +145,12 @@ void TM3_Isr() interrupt 19
 	
 }
 extern void pit_callback(void);
+float isr_ppm;
 void TM4_Isr() interrupt 20
 {
 	TIM4_CLEAR_FLAG; //清除中断标志
-
+//     lcd_showfloat(8 * 8, 0,isr_ppm , 4, 3);
+// isr_ppm = Smog_GetPPM();
     //Motor_PWM_Write();
 }
 

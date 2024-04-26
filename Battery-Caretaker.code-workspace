@@ -11,7 +11,8 @@
 			"seekfree_icm20602.h": "c",
 			"headfile.h": "c",
 			"dht11.h": "c",
-			"zf_adc.h": "c"
+			"zf_adc.h": "c",
+			"seekfree_assistant.h": "c"
 		}
 	}
 }

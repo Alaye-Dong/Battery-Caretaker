@@ -23,43 +23,28 @@
 // 在board_init中,已经将P54引脚设置为复位
 // 如果需要使用P54引脚,可以在board.c文件中的board_init()函数中删除SET_P54_RESRT即可
 
+float the_ppm;
 void main()
 {
     clock_init(SYSTEM_CLOCK_52M); // 初始化系统频率,勿删除此句代码。
     board_init();                 // 初始化寄存器,勿删除此句代码。
 
     // 此处编写用户代码 例如外设初始化代码等
-
+MQ2_Init();
     // ADC初始化
     //  adc_init(ADC_P00,ADC_SYSclk_DIV_2);
     //  adc_init(ADC_P01,ADC_SYSclk_DIV_2);
     //  adc_init(ADC_P05,ADC_SYSclk_DIV_2);
     //  adc_init(ADC_P06,ADC_SYSclk_DIV_2);
     //  adc_init(ADC_P11,ADC_SYSclk_DIV_2);
-    //  adc_init(ADC_P13,ADC_SYSclk_DIV_2);
-
-    // Motor_PWM_Init();
-
-    // pwm_init(PWMB_CH1_P74, 50, 692);//舵机 最大765   最小625
-
-    // Encoder_Init();
-
-    // 六轴陀螺仪初始化
-    //  while(imu660ra_init())
-    //  {
-    //      delay_ms(500);
-    //      printf("imu660ra init try again.\r\n");
-    //  }
-
-    // dl1a_init();    //TOF DL1A 初始化
-
-    adc_init(ADC_P10, ADC_SYSclk_DIV_2);
-
+    //  adc_init(ADC_P13,ADC_SYSclk_DIV_2);    
     BEEP_Init();
     lcd_init();    // 屏幕初始化
     eeprom_init(); // eeprom初始化
 
-    pit_timer_ms(TIM_4, 5); // 设置中断定时
+    
+    
+    //pit_timer_ms(TIM_4, 5); // 设置中断定时
 
     BEEP_ON_ms(100);
 
@@ -68,10 +53,14 @@ void main()
         // 此处编写需要循环执行的代码
         // Keystroke_Menu();
 
-        read_dht11(); // 读取DHT11的数值
-        // Delay1000ms();//延时1s,因为DHT11的刷新频率在1s 左右
-        Trans(); // 将读取的数据转换成一串字符
+        // read_dht11(); // 读取DHT11的数值
+        // // Delay1000ms();//延时1s,因为DHT11的刷新频率在1s 左右
+        // Trans(); // 将读取的数据转换成一串字符
         // lcd_showstr(1 * 8, 3, "CHH");
-        lcd_showint32(14 * 8, 3, CHH, 3);
+         lcd_showint32(14 * 8, 3, adc_once(ADC_P13, ADC_12BIT), 3);
+        lcd_showstr(1 * 8, 3, "TEST");
+        //the_ppm = Smog_GetPPM();
+        //lcd_showfloat(8 * 8, 0,the_ppm , 4, 3);
+        //delay_ms(1000);
     }
 }

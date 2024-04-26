@@ -3,7 +3,7 @@
 #define uint unsigned int
 #define uchar unsigned char
 
-#define DATA_PIN P36
+#define DATA_PIN P40
 //#define DATA P3^4//这样宏定义在编译的时候会报错，具体的看我写的一篇文章，在问题解决分类里面，有详细的解释
 int RLL,RHH,CLL,CHH; //用于储存温湿度的数据定义
 char DAMPH[8],TEMPH[8],DAMPL[8],TEMPL[8];//用于储存温湿度的字符型数组定义
