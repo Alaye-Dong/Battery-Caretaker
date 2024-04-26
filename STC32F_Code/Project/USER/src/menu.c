@@ -250,6 +250,20 @@ void Keystroke_Menu_HOME(void) // 0
         lcd_showstr(1 * CHAR_SCREEN_WIDTH, 1, "STRAT");
         lcd_showstr(1 * CHAR_SCREEN_WIDTH, 2, "PID_SPEED");
 
+
+        lcd_showstr(1 * CHAR_SCREEN_WIDTH, 6, "Temp_Co");
+        lcd_showint32(14 * CHAR_SCREEN_WIDTH, 6, CHH, 3);
+
+        lcd_showstr(1 * CHAR_SCREEN_WIDTH, 7, "Smog_Vol");
+        lcd_showfloat(14 * CHAR_SCREEN_WIDTH, 7, Smog_Get_Vol(), 4, 3);
+
+        read_dht11(); // 读取DHT11的数值
+        Trans();
+        if (CHH >= 30)
+        {
+            BEEP_ON_ms(5);
+        }
+
         Keystroke_Scan();
         Cursor();
     }

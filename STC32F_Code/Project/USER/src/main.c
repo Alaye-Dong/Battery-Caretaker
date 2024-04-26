@@ -54,9 +54,14 @@ void main()
          Keystroke_Menu();
 
         // read_dht11(); // 读取DHT11的数值
+        // Trans();
         // lcd_showint32(14 * 8, 5, CHH, 3);
 
         // lcd_showstr(1 * 8, 3, "TEST");
         // lcd_showfloat(8 * 8, 0,Smog_Get_Vol() , 4, 3);
+        // if(CHH >= 30)
+        // {
+        //     BEEP_ON_ms(5);
+        // }
     }
 }
