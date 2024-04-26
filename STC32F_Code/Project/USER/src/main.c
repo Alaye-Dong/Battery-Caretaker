@@ -38,11 +38,11 @@ void main()
     //  adc_init(ADC_P11,ADC_SYSclk_DIV_2);
     //  adc_init(ADC_P13,ADC_SYSclk_DIV_2);
 
-    //Motor_PWM_Init();
+    // Motor_PWM_Init();
 
     // pwm_init(PWMB_CH1_P74, 50, 692);//舵机 最大765   最小625
 
-    //Encoder_Init();
+    // Encoder_Init();
 
     // 六轴陀螺仪初始化
     //  while(imu660ra_init())
@@ -52,34 +52,26 @@ void main()
     //  }
 
     // dl1a_init();    //TOF DL1A 初始化
+
+    adc_init(ADC_P10, ADC_SYSclk_DIV_2);
+
     BEEP_Init();
     lcd_init();    // 屏幕初始化
     eeprom_init(); // eeprom初始化
 
-    //pit_timer_ms(TIM_4, 5); // 设置中断定时
+    pit_timer_ms(TIM_4, 5); // 设置中断定时
 
     BEEP_ON_ms(100);
-
-
-// 		Send_String("TEMP NOW: ");//在串口上显示这段内容
-// 		Send_String(TEMPH);//将温度值发送到串口上
-// 		Send_String("\r\n");//另取一行
-// 		Send_String("DAMP NOW: ");
-// 		Send_String(DAMPH);
-// 		Send_String("\r\n");
-// 		OLED_P8x16Str(0,4,TEMPH);//在OLED上显示出当前温度值
-// 		OLED_P8x16Str(64,4,DAMPH);	
-
 
     while (1)
     {
         // 此处编写需要循环执行的代码
-        //Keystroke_Menu();
-        
-        read_dht11();//读取DHT11的数值
-        //Delay1000ms();//延时1s,因为DHT11的刷新频率在1s 左右
-        Trans();//将读取的数据转换成一串字符
-        //lcd_showstr(1 * 8, 3, "CHH");
+        // Keystroke_Menu();
+
+        read_dht11(); // 读取DHT11的数值
+        // Delay1000ms();//延时1s,因为DHT11的刷新频率在1s 左右
+        Trans(); // 将读取的数据转换成一串字符
+        // lcd_showstr(1 * 8, 3, "CHH");
         lcd_showint32(14 * 8, 3, CHH, 3);
     }
 }

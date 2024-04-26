@@ -10,7 +10,8 @@
 			"seekfree_absolute_encoder.h": "c",
 			"seekfree_icm20602.h": "c",
 			"headfile.h": "c",
-			"dht11.h": "c"
+			"dht11.h": "c",
+			"zf_adc.h": "c"
 		}
 	}
 }
