@@ -734,6 +734,11 @@
               <FileType>5</FileType>
               <FilePath>..\USER\inc\beep.h</FilePath>
             </File>
+            <File>
+              <FileName>dht11.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\USER\inc\dht11.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -768,6 +773,11 @@
               <FileName>beep.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\USER\src\beep.c</FilePath>
+            </File>
+            <File>
+              <FileName>dht11.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\USER\src\dht11.c</FilePath>
             </File>
           </Files>
         </Group>

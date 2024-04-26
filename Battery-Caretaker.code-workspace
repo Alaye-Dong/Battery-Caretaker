@@ -5,6 +5,12 @@
 		}
 	],
 	"settings": {
-		"files.encoding": "gb2312"
+		"files.encoding": "gb2312",
+		"files.associations": {
+			"seekfree_absolute_encoder.h": "c",
+			"seekfree_icm20602.h": "c",
+			"headfile.h": "c",
+			"dht11.h": "c"
+		}
 	}
 }

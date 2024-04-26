@@ -3,11 +3,15 @@
 
 #include  "headfile.h"
 
-void Delay1000ms();
-void DHT11_Start();
-int readdht11_byte();
-void read_dht11();
-void Trans();
+extern int RLL,RHH,CLL,CHH; //用于储存温湿度的数据定义
+extern char DAMPH[8],TEMPH[8],DAMPL[8],TEMPL[8];//用于储存温湿度的字符型数组定义
+extern char dot[1];//小数点
+
+void Delay1000ms(void);
+void DHT11_Start(void);
+int readdht11_byte(void);
+void read_dht11(void);
+void Trans(void);
 
 
 #endif
