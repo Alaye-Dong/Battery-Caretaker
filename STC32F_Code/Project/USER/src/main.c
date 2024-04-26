@@ -51,15 +51,12 @@ void main()
     while (1)
     {
         // 此处编写需要循环执行的代码
-        // Keystroke_Menu();
+         Keystroke_Menu();
 
-        read_dht11(); // 读取DHT11的数值
-        lcd_showint32(14 * 8, 5, CHH, 3);
+        // read_dht11(); // 读取DHT11的数值
+        // lcd_showint32(14 * 8, 5, CHH, 3);
 
-        //lcd_showint32(14 * 8, 3, adc_once(ADC_P13, ADC_12BIT), 5);
-        lcd_showstr(1 * 8, 3, "TEST");
-
-        //the_ppm = Smog_GetPPM();
-        lcd_showfloat(8 * 8, 0,Smog_Get_Vol() , 4, 3);
+        // lcd_showstr(1 * 8, 3, "TEST");
+        // lcd_showfloat(8 * 8, 0,Smog_Get_Vol() , 4, 3);
     }
 }
