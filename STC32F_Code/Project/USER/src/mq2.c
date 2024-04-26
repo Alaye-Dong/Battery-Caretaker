@@ -37,24 +37,15 @@ float Smog_Get_Vol(void)
     float voltage = 0;    // MQ-7传感器模块的电压输出，与一氧化碳的浓度成正比
 
     adc_value = ADC1_Average_Data(); 
+    //adc_value = adc_once(ADC_P13, ADC_12BIT); 
     delay_ms(5);
 
     voltage = (3.3 / 4096.0) * (adc_value);
 
     return voltage;
 }
-/*********************
-// 传感器校准函数，根据当前环境PPM值与测得的RS电压值，反推出R0值。
-// 在空气中运行过后测出R0为26
-float MQ7_PPM_Calibration()
-{
-    float RS = 0;
-    float R0 = 0;
-    RS = (3.3f - Smog_Get_Vol()) / Smog_Get_Vol() * RL;//RL	10  // RL阻值
-    R0 = RS / pow(CAL_PPM / 98.322, 1 / -1.458f);//CAL_PPM  10  // 校准环境中PPM值
-    return R0;
-}
-**********************/
+
+
 
 // 计算Smog_ppm
 float Smog_GetPPM()
@@ -62,4 +53,15 @@ float Smog_GetPPM()
     float RS = (3.3f - Smog_Get_Vol()) / Smog_Get_Vol() * RL;
     float ppm = 98.322f * pow(RS / R0, -1.458f);
     return ppm;
+}
+
+// 传感器校准函数，根据当前环境PPM值与测得的RS电压值，反推出R0值。
+// 在空气中运行过后测出R0为26
+float MQ7_PPM_Calibration()
+{
+    float RS_value = 0;
+    float R0_value = 0;
+    RS_value = (3.3f - Smog_Get_Vol()) / Smog_Get_Vol() * RL;//RL	10  // RL阻值
+    R0_value = RS_value / pow(CAL_PPM / 98.322, 1 / -1.458f);//CAL_PPM  10  // 校准环境中PPM值
+    return R0_value;
 }

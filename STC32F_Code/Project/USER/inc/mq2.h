@@ -7,5 +7,6 @@ void MQ2_Init(void);
 uint16 MQ2_ADC_Read(void);
 float Smog_Get_Vol(void);
 float Smog_GetPPM(void);
+float MQ7_PPM_Calibration(void);
 
 #endif

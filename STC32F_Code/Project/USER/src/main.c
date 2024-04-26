@@ -30,7 +30,7 @@ void main()
     board_init();                 // 初始化寄存器,勿删除此句代码。
 
     // 此处编写用户代码 例如外设初始化代码等
-MQ2_Init();
+    MQ2_Init();
     // ADC初始化
     //  adc_init(ADC_P00,ADC_SYSclk_DIV_2);
     //  adc_init(ADC_P01,ADC_SYSclk_DIV_2);
@@ -53,14 +53,13 @@ MQ2_Init();
         // 此处编写需要循环执行的代码
         // Keystroke_Menu();
 
-        // read_dht11(); // 读取DHT11的数值
-        // // Delay1000ms();//延时1s,因为DHT11的刷新频率在1s 左右
-        // Trans(); // 将读取的数据转换成一串字符
-        // lcd_showstr(1 * 8, 3, "CHH");
-         lcd_showint32(14 * 8, 3, adc_once(ADC_P13, ADC_12BIT), 3);
+        read_dht11(); // 读取DHT11的数值
+        lcd_showint32(14 * 8, 5, CHH, 3);
+
+        //lcd_showint32(14 * 8, 3, adc_once(ADC_P13, ADC_12BIT), 5);
         lcd_showstr(1 * 8, 3, "TEST");
+
         //the_ppm = Smog_GetPPM();
-        //lcd_showfloat(8 * 8, 0,the_ppm , 4, 3);
-        //delay_ms(1000);
+        lcd_showfloat(8 * 8, 0,Smog_Get_Vol() , 4, 3);
     }
 }
