@@ -96,6 +96,15 @@ float Temperature_Fusion(void)
 	return CHH+(float)CLL/10000;
 }
 
+uint8 Threshold_Warning(float detected_value, float threshold_value)
+{
+	if(detected_value>threshold_value)
+	{
+		return 1;
+	}
+	return 0;
+}
+
 // void main()
 // {	
 //     OLED_Init();//≥ı ºªØOLED

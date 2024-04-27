@@ -37,6 +37,7 @@ float change_unit = 0;    // 单次修改的单位值
 int change_unit_multiplier = 1; // 修改单位倍数
 int keystroke_three_count = 0; // 定义一个全局变量记录KEYSTROKE_THREE的触发次数
 
+uint8 temp_warning_flag = 0;
 // 需要被修改的参数示例
 int start_flag = 0, garage_out_direction = 0;
 float PID_P = 0.123, PID_D = 0.123;
@@ -260,9 +261,16 @@ void Keystroke_Menu_HOME(void) // 0
 
         read_dht11(); // 读取DHT11的数值
 
-        if (CHH >= 30)
+        if (Threshold_Warning(Temperature_Fusion(), 30))
         {
+            temp_warning_flag = 1;
+            lcd_showstr(1 * CHAR_SCREEN_WIDTH, 3, "TEMP_WARNING!!!");
             BEEP_ON_ms(5);
+        }
+        else if(temp_warning_flag == 1)
+        {
+            temp_warning_flag = 0;
+            lcd_clear(WHITE);
         }
 
         Keystroke_Scan();
@@ -299,7 +307,7 @@ void Keystroke_Menu_HOME(void) // 0
 ///////////////////////////////////////
 void Menu_ONE_Display(uint8 control_line)
 {
-    lcd_showstr(0 * CHAR_SCREEN_WIDTH, 0, "<<STRAT");
+    lcd_showstr(0 * CHAR_SCREEN_WIDTH, 0, "<<SETUP");
 
     lcd_showstr(1 * CHAR_SCREEN_WIDTH, 1, "Start_Flag");
     lcd_showstr(1 * CHAR_SCREEN_WIDTH, 2, "Out_Direction");

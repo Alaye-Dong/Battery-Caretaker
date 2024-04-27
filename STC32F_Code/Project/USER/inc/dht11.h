@@ -13,5 +13,6 @@ int readdht11_byte(void);
 void read_dht11(void);
 void Trans(void);
 float Temperature_Fusion(void);
+uint8 Threshold_Warning(float detected_value, float threshold_value);
 
 #endif
