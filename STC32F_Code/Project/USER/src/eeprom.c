@@ -20,22 +20,18 @@ void eeprom_init()
     }
     else // 非初次启动，读取eeprom用于赋值变量
     {
-        start_flag = read_int(1);
-        garage_out_direction = read_int(2);
-        PID_P = read_float(3);
-        PID_D = read_float(4);
-        normal_speed = read_int(5);
+        waring_on = read_int(1);
+        threshold_temp = read_float(2);
+        threshold_smog_vol = read_float(3);
     }
 }
 
 // 刷写保存数据到eeprom
 void eeprom_flash()
 {
-    save_int(start_flag, 1);
-    save_int(garage_out_direction, 2);
-    save_float(PID_P, 3);
-    save_float(PID_D, 4);
-    save_int(normal_speed, 5);
+    save_int(waring_on, 1);
+    save_float(threshold_temp, 2);
+    save_float(threshold_smog_vol, 3);
 }
 
 void save_int(int32 input, uint8 value_bit)

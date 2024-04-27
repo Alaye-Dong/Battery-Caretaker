@@ -38,16 +38,16 @@ int change_unit_multiplier = 1; // 修改单位倍数
 int keystroke_three_count = 0; // 定义一个全局变量记录KEYSTROKE_THREE的触发次数
 
 uint8 temp_warning_flag = 0;
+uint8 smog_warning_flag = 0;
 // 需要被修改的参数示例
-int start_flag = 0, garage_out_direction = 0;
-float PID_P = 0.123, PID_D = 0.123;
-int normal_speed = 0;
+int waring_on = 1, garage_out_direction = 0;
+float threshold_temp = 30.00, threshold_smog_vol = 0.700;
+
 
 // 将有菜单页面的代号填入该数组中，防止由箭头所在行号所决定进入不存在的菜单
 int menu_have_sub[] = {
     0,
-    1, 11, 12,
-    2, 21, 22, 23};
+    1, 11, 12, 13};
 
 // 菜单箭头标识
 void Cursor(void)
@@ -222,15 +222,16 @@ void Keystroke_Menu(void)
     case 1:
     case 11:
     case 12:
+    case 13:
         Keystroke_Menu_ONE();
         break;
 
-    case 2:
-    case 21:
-    case 22:
-    case 23:
-        Keystroke_Menu_TWO();
-        break;
+    // case 2:
+    // case 21:
+    // case 22:
+    // case 23:
+    //     Keystroke_Menu_TWO();
+    //     break;
 
     default:
         break;
@@ -249,8 +250,6 @@ void Keystroke_Menu_HOME(void) // 0
     {
         lcd_showstr((CENTER_COLUMN - 2) * CHAR_SCREEN_WIDTH, 0, "MENU");
         lcd_showstr(1 * CHAR_SCREEN_WIDTH, 1, "SETUP");
-        lcd_showstr(1 * CHAR_SCREEN_WIDTH, 2, "PID_SPEED");
-
 
         lcd_showstr(1 * CHAR_SCREEN_WIDTH, 6, "Temp_Co");
         //lcd_showint32(14 * CHAR_SCREEN_WIDTH, 5, CHH, 5);
@@ -261,7 +260,7 @@ void Keystroke_Menu_HOME(void) // 0
 
         read_dht11(); // 读取DHT11的数值
 
-        if (Threshold_Warning(Temperature_Fusion(), 30))
+        if (Threshold_Warning(Temperature_Fusion(), threshold_temp))
         {
             temp_warning_flag = 1;
             lcd_showstr(1 * CHAR_SCREEN_WIDTH, 3, "TEMP_WARNING!!!");
@@ -270,6 +269,18 @@ void Keystroke_Menu_HOME(void) // 0
         else if(temp_warning_flag == 1)
         {
             temp_warning_flag = 0;
+            lcd_clear(WHITE);
+        }
+
+        if (Threshold_Warning(Temperature_Fusion(), threshold_smog_vol))
+        {
+            smog_warning_flag = 1;
+            lcd_showstr(1 * CHAR_SCREEN_WIDTH, 4, "SMOG_WARNING!!!");
+            BEEP_ON_ms(5);
+        }
+        else if(temp_warning_flag == 1)
+        {
+            smog_warning_flag = 0;
             lcd_clear(WHITE);
         }
 
@@ -309,11 +320,15 @@ void Menu_ONE_Display(uint8 control_line)
 {
     lcd_showstr(0 * CHAR_SCREEN_WIDTH, 0, "<<SETUP");
 
-    lcd_showstr(1 * CHAR_SCREEN_WIDTH, 1, "Start_Flag");
-    lcd_showstr(1 * CHAR_SCREEN_WIDTH, 2, "Out_Direction");
+    lcd_showstr(1 * CHAR_SCREEN_WIDTH, 1, "Waring_On");
+    lcd_showstr(1 * CHAR_SCREEN_WIDTH, 2, "T_Temp");
+    lcd_showstr(1 * CHAR_SCREEN_WIDTH, 3, "T_Smog_Vol");
 
-    lcd_showint32(14 * CHAR_SCREEN_WIDTH, 1, start_flag, 3);    // “1” 应该与该函数被调用时control_line参数一致，才能正确显示&表示在调整的变量
-    lcd_showint32(14 * CHAR_SCREEN_WIDTH, 2, garage_out_direction, 3);
+
+
+    lcd_showint32(14 * CHAR_SCREEN_WIDTH, 1, waring_on, 3);    // “1” 应该与该函数被调用时control_line参数一致，才能正确显示&表示在调整的变量
+    lcd_showfloat(14 * CHAR_SCREEN_WIDTH, 2, threshold_temp, 2, 3);
+    lcd_showfloat(14 * CHAR_SCREEN_WIDTH, 3, threshold_smog_vol, 2, 3);
 
     lcd_showstr(0, control_line, "&"); //&标志提示
 }
@@ -334,56 +349,56 @@ void Keystroke_Menu_ONE(void) // 1 11 12
 
     case 11:
         Menu_ONE_Display(1);
-        Keystroke_Special_Value(&start_flag);
+        Keystroke_Special_Value(&waring_on);
         break;
     case 12:
         Menu_ONE_Display(2);
-        Keystroke_Special_Value(&garage_out_direction);
+        Keystroke_float(&threshold_temp, 0.01);
+        break;
+    case 13:
+        Menu_ONE_Display(3);
+        Keystroke_float(&threshold_smog_vol, 0.001);
         break;
     }
 
 }
 
-void Menu_TWO_Display(uint8 control_line)
-{
-    lcd_showstr(0 * CHAR_SCREEN_WIDTH, 0, "<<PID_SPEED");
+// void Menu_TWO_Display(uint8 control_line)
+// {
+//     lcd_showstr(0 * CHAR_SCREEN_WIDTH, 0, "<<PID_SPEED");
 
-    lcd_showstr(1 * CHAR_SCREEN_WIDTH, 1, "P");
-    lcd_showstr(1 * CHAR_SCREEN_WIDTH, 2, "D");
-    lcd_showstr(1 * CHAR_SCREEN_WIDTH, 3, "normal_speed");
+//     lcd_showstr(1 * CHAR_SCREEN_WIDTH, 1, "P");
+//     lcd_showstr(1 * CHAR_SCREEN_WIDTH, 2, "D");
+//     lcd_showstr(1 * CHAR_SCREEN_WIDTH, 3, "normal_speed");
 
-    lcd_showfloat(14 * CHAR_SCREEN_WIDTH, 1, PID_P, 2, 3);
-    lcd_showfloat(14 * CHAR_SCREEN_WIDTH, 2, PID_D, 2, 3);
-    lcd_showint32(14 * CHAR_SCREEN_WIDTH, 3, normal_speed, 3);
+//     lcd_showfloat(14 * CHAR_SCREEN_WIDTH, 1, threshold_temp, 2, 3);
+//     lcd_showfloat(14 * CHAR_SCREEN_WIDTH, 2, threshold_smog_vol, 2, 3);
+//     lcd_showint32(14 * CHAR_SCREEN_WIDTH, 3, normal_speed, 3);
 
-    lcd_showstr(0, control_line, "&"); //&标志提示
-}
+//     lcd_showstr(0, control_line, "&"); //&标志提示
+// }
 
-void Keystroke_Menu_TWO(void) // 2 21 22 23
-{
-    switch (display_codename)
-    {
-    case 2:
-        while (menu_next_flag == 0)
-        {
-            Menu_TWO_Display(-1);
-            Keystroke_Scan();
-            Cursor();
-        }
-        Menu_Next_Back();
-        break;
+// void Keystroke_Menu_TWO(void) // 2 21 22 23
+// {
+//     switch (display_codename)
+//     {
+//     case 2:
+//         while (menu_next_flag == 0)
+//         {
+//             Menu_TWO_Display(-1);
+//             Keystroke_Scan();
+//             Cursor();
+//         }
+//         Menu_Next_Back();
+//         break;
 
-    case 21:
-        Menu_TWO_Display(1);
-        Keystroke_float(&PID_P, 0.001);
-        break;
-    case 22:
-        Menu_TWO_Display(2);
-        Keystroke_float(&PID_D, 0.001);
-        break;
-    case 23:
-        Menu_TWO_Display(3);
-        Keystroke_int(&normal_speed, 1);
-        break;
-    }
-}
+//     case 21:
+//         Menu_TWO_Display(1);
+//         Keystroke_float(&threshold_temp, 0.001);
+//         break;
+//     case 22:
+//         Menu_TWO_Display(2);
+//         Keystroke_float(&threshold_smog_vol, 0.001);
+//         break;
+//     }
+// }

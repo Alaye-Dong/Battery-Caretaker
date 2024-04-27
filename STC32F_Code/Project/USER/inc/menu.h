@@ -5,9 +5,9 @@
 
 extern int display_codename; // ÏÔÊ¾Ò³Ãæ´úºÅ
 
-extern int start_flag, garage_out_direction;
-extern float PID_P, PID_D;
-extern int normal_speed;
+extern int waring_on;
+extern float threshold_temp, threshold_smog_vol;
+
 
 void Cursor(void);
 void Menu_Next_Back(void);
@@ -24,7 +24,7 @@ void Keystroke_Menu_HOME(void);
 void Menu_ONE_Display(uint8 control_line);
 void Keystroke_Menu_ONE(void);
 
-void Menu_TWO_Display(uint8 control_line);
-void Keystroke_Menu_TWO(void);
+// void Menu_TWO_Display(uint8 control_line);
+// void Keystroke_Menu_TWO(void);
 
 #endif
