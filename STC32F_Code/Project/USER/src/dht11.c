@@ -91,6 +91,11 @@ void Trans()//将读取的温湿度转换成字符型
 	strcat(DAMPH,DAMPL);
 }
 
+float Temperature_Fusion(void)
+{
+	return CHH+(float)CLL/10000;
+}
+
 // void main()
 // {	
 //     OLED_Init();//初始化OLED

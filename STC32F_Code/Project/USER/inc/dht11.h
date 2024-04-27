@@ -12,6 +12,6 @@ void DHT11_Start(void);
 int readdht11_byte(void);
 void read_dht11(void);
 void Trans(void);
-
+float Temperature_Fusion(void);
 
 #endif
