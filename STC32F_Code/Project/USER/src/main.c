@@ -23,7 +23,6 @@
 // 在board_init中,已经将P54引脚设置为复位
 // 如果需要使用P54引脚,可以在board.c文件中的board_init()函数中删除SET_P54_RESRT即可
 
-float the_ppm;
 void main()
 {
     clock_init(SYSTEM_CLOCK_52M); // 初始化系统频率,勿删除此句代码。
@@ -31,6 +30,7 @@ void main()
 
     // 此处编写用户代码 例如外设初始化代码等
     MQ2_Init();
+    IMSC04A_Init();
     // ADC初始化
     //  adc_init(ADC_P00,ADC_SYSclk_DIV_2);
     //  adc_init(ADC_P01,ADC_SYSclk_DIV_2);

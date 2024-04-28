@@ -24,7 +24,7 @@ uint16 ADC_Average_Data()
     for (t = 0; t < SMOG_READ_TIMES; t++)
     {
         temp_val += MQ2_ADC_Read(); // 读取ADC值
-        delay_ms(5);
+        //delay_ms(5);
     }
     temp_val /= SMOG_READ_TIMES; // 得到平均值
     return (uint16)temp_val;     // 返回算出的ADC平均值
@@ -37,8 +37,7 @@ float Smog_Get_Vol(void)
     float voltage = 0;    // MQ-7传感器模块的电压输出，与一氧化碳的浓度成正比
 
     adc_value = ADC_Average_Data(); 
-    //adc_value = adc_once(ADC_P13, ADC_12BIT); 
-    delay_ms(5);
+    //delay_ms(5);
 
     voltage = (3.3 / 4096.0) * (adc_value);
 

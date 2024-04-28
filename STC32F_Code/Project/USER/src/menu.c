@@ -39,15 +39,16 @@ int keystroke_three_count = 0; // 定义一个全局变量记录KEYSTROKE_THREE的触发次数
 
 uint8 temp_warning_flag = 0;
 uint8 smog_warning_flag = 0;
+uint8 press_warning_flag = 0;
 // 需要被修改的参数示例
 int waring_on = 1, garage_out_direction = 0;
-float threshold_temp = 30.00, threshold_smog_vol = 0.700;
+float threshold_temp = 30.00, threshold_smog_vol = 0.700, threshold_press_vol = 0.5;
 
 
 // 将有菜单页面的代号填入该数组中，防止由箭头所在行号所决定进入不存在的菜单
 int menu_have_sub[] = {
     0,
-    1, 11, 12, 13};
+    1, 11, 12, 13, 14};
 
 // 菜单箭头标识
 void Cursor(void)
@@ -223,6 +224,7 @@ void Keystroke_Menu(void)
     case 11:
     case 12:
     case 13:
+    case 14:
         Keystroke_Menu_ONE();
         break;
 
@@ -251,8 +253,10 @@ void Keystroke_Menu_HOME(void) // 0
         lcd_showstr((CENTER_COLUMN - 2) * CHAR_SCREEN_WIDTH, 0, "MENU");
         lcd_showstr(1 * CHAR_SCREEN_WIDTH, 1, "SETUP");
 
+        lcd_showstr(1 * CHAR_SCREEN_WIDTH, 5, "Press_Vol");
+        lcd_showfloat(14 * CHAR_SCREEN_WIDTH, 5, Press_Get_Vol(), 4, 3);
+
         lcd_showstr(1 * CHAR_SCREEN_WIDTH, 6, "Temp_Co");
-        //lcd_showint32(14 * CHAR_SCREEN_WIDTH, 5, CHH, 5);
         lcd_showfloat(13 * CHAR_SCREEN_WIDTH, 6, Temperature_Fusion(), 2, 3);
 
         lcd_showstr(1 * CHAR_SCREEN_WIDTH, 7, "Smog_Vol");
@@ -265,7 +269,7 @@ void Keystroke_Menu_HOME(void) // 0
             if (Threshold_Warning(Temperature_Fusion(), threshold_temp))
             {
                 temp_warning_flag = 1;
-                lcd_showstr(1 * CHAR_SCREEN_WIDTH, 3, "TEMP_WARNING!!!");
+                lcd_showstr(1 * CHAR_SCREEN_WIDTH, 2, "TEMP_WARNING!!!");
                 BEEP_ON_ms(5);
             }
             else if (temp_warning_flag == 1)
@@ -277,7 +281,7 @@ void Keystroke_Menu_HOME(void) // 0
             if (Threshold_Warning(Smog_Get_Vol(), threshold_smog_vol))
             {
                 smog_warning_flag = 1;
-                lcd_showstr(1 * CHAR_SCREEN_WIDTH, 4, "SMOG_WARNING!!!");
+                lcd_showstr(1 * CHAR_SCREEN_WIDTH, 3, "SMOG_WARNING!!!");
                 BEEP_ON_ms(5);
             }
             else if (smog_warning_flag == 1)
@@ -285,6 +289,20 @@ void Keystroke_Menu_HOME(void) // 0
                 smog_warning_flag = 0;
                 lcd_clear(BLACK);
             }
+
+            if (Threshold_Warning(Press_Get_Vol(), threshold_press_vol))
+            {
+                press_warning_flag = 1;
+                lcd_showstr(1 * CHAR_SCREEN_WIDTH, 4, "PRESS_WARNING!!!");
+                BEEP_ON_ms(5);
+            }
+            else if (press_warning_flag == 1)
+            {
+                press_warning_flag = 0;
+                lcd_clear(BLACK);
+            }
+        
+            
         }
 
         Keystroke_Scan();
@@ -326,12 +344,14 @@ void Menu_ONE_Display(uint8 control_line)
     lcd_showstr(1 * CHAR_SCREEN_WIDTH, 1, "Waring_On");
     lcd_showstr(1 * CHAR_SCREEN_WIDTH, 2, "T_Temp");
     lcd_showstr(1 * CHAR_SCREEN_WIDTH, 3, "T_Smog_Vol");
+    lcd_showstr(1 * CHAR_SCREEN_WIDTH, 4, "T_Press_Vol");
 
 
 
     lcd_showint32(14 * CHAR_SCREEN_WIDTH, 1, waring_on, 3);    // “1” 应该与该函数被调用时control_line参数一致，才能正确显示&表示在调整的变量
     lcd_showfloat(14 * CHAR_SCREEN_WIDTH, 2, threshold_temp, 2, 3);
     lcd_showfloat(14 * CHAR_SCREEN_WIDTH, 3, threshold_smog_vol, 2, 3);
+    lcd_showfloat(14 * CHAR_SCREEN_WIDTH, 4, threshold_press_vol, 2, 3);
 
     lcd_showstr(0, control_line, "&"); //&标志提示
 }
@@ -361,6 +381,10 @@ void Keystroke_Menu_ONE(void) // 1 11 12
     case 13:
         Menu_ONE_Display(3);
         Keystroke_float(&threshold_smog_vol, 0.001);
+        break;
+    case 14:
+        Menu_ONE_Display(4);
+        Keystroke_float(&threshold_press_vol, 0.01);
         break;
     }
 
