@@ -40,6 +40,7 @@ void main()
     //  adc_init(ADC_P13,ADC_SYSclk_DIV_2);    
     BEEP_Init();
     lcd_init();    // 屏幕初始化
+    lcd_clear(BLACK);
     eeprom_init(); // eeprom初始化
 
     

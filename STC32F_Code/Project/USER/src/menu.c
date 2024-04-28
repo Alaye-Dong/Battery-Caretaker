@@ -90,13 +90,13 @@ void Menu_Next_Back()
     case -1: // 返回上一级
         display_codename = display_codename / 10;
         cursor_row = ROWS_MIN;
-        lcd_clear(WHITE);
+        lcd_clear(BLACK);
         break;
     case 1: // 进入下一级
         if (Have_Sub_Menu(display_codename * 10 + cursor_row))
         {
             display_codename = display_codename * 10 + cursor_row;
-            lcd_clear(WHITE);
+            lcd_clear(BLACK);
         }
         break;
     }
@@ -126,7 +126,7 @@ void HandleKeystroke(int keystroke_label)
     {
     case KEYSTROKE_FOUR:
         display_codename /= 10; // 返回上一页
-        lcd_clear(WHITE);
+        lcd_clear(BLACK);
         break;
     case KEYSTROKE_THREE:
         keystroke_three_count++;
@@ -260,28 +260,31 @@ void Keystroke_Menu_HOME(void) // 0
 
         read_dht11(); // 读取DHT11的数值
 
-        if (Threshold_Warning(Temperature_Fusion(), threshold_temp))
+        if (waring_on == 1)
         {
-            temp_warning_flag = 1;
-            lcd_showstr(1 * CHAR_SCREEN_WIDTH, 3, "TEMP_WARNING!!!");
-            BEEP_ON_ms(5);
-        }
-        else if(temp_warning_flag == 1)
-        {
-            temp_warning_flag = 0;
-            lcd_clear(WHITE);
-        }
+            if (Threshold_Warning(Temperature_Fusion(), threshold_temp))
+            {
+                temp_warning_flag = 1;
+                lcd_showstr(1 * CHAR_SCREEN_WIDTH, 3, "TEMP_WARNING!!!");
+                BEEP_ON_ms(5);
+            }
+            else if (temp_warning_flag == 1)
+            {
+                temp_warning_flag = 0;
+                lcd_clear(BLACK);
+            }
 
-        if (Threshold_Warning(Smog_Get_Vol(), threshold_smog_vol))
-        {
-            smog_warning_flag = 1;
-            lcd_showstr(1 * CHAR_SCREEN_WIDTH, 4, "SMOG_WARNING!!!");
-            BEEP_ON_ms(5);
-        }
-        else if(temp_warning_flag == 1)
-        {
-            smog_warning_flag = 0;
-            lcd_clear(WHITE);
+            if (Threshold_Warning(Smog_Get_Vol(), threshold_smog_vol))
+            {
+                smog_warning_flag = 1;
+                lcd_showstr(1 * CHAR_SCREEN_WIDTH, 4, "SMOG_WARNING!!!");
+                BEEP_ON_ms(5);
+            }
+            else if (smog_warning_flag == 1)
+            {
+                smog_warning_flag = 0;
+                lcd_clear(BLACK);
+            }
         }
 
         Keystroke_Scan();
@@ -292,7 +295,7 @@ void Keystroke_Menu_HOME(void) // 0
     {
         display_codename = cursor_row;
         cursor_row = ROWS_MIN;
-        lcd_clear(WHITE);
+        lcd_clear(BLACK);
     }
 
     else if (menu_next_flag == -1 && EEPROM_MODE == 1) // 在主菜单时按下回退键（按键4）来进行eeprom确认刷写
@@ -300,13 +303,13 @@ void Keystroke_Menu_HOME(void) // 0
         eeprom_flash();
 
         // 刷写完成提示
-        lcd_clear(WHITE);
+        lcd_clear(BLACK);
         lcd_showstr(1 * CHAR_SCREEN_WIDTH, 1, "EEPROM_SAVED");
         lcd_showstr(1 * CHAR_SCREEN_WIDTH, 4, "@author Alaye_Dong"); // 用了就别删.doge！！！
         delay_ms(400);
 
         BEEP_ON_ms(100);
-        lcd_clear(WHITE);
+        lcd_clear(BLACK);
     }
 
     menu_next_flag = 0; // 切换完页面，标志位归0
