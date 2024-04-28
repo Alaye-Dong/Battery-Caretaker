@@ -272,7 +272,7 @@ void Keystroke_Menu_HOME(void) // 0
             lcd_clear(WHITE);
         }
 
-        if (Threshold_Warning(Temperature_Fusion(), threshold_smog_vol))
+        if (Threshold_Warning(Smog_Get_Vol(), threshold_smog_vol))
         {
             smog_warning_flag = 1;
             lcd_showstr(1 * CHAR_SCREEN_WIDTH, 4, "SMOG_WARNING!!!");
