@@ -57,5 +57,6 @@
 #include "beep.h"
 #include "dht11.h"
 #include "mq2.h"
+#include "imsc04a.h"
 
 #endif
