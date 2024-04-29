@@ -40,7 +40,6 @@ float Smog_Get_Vol(void)
     //delay_ms(5);
 
     voltage = (3.3 / 4096.0) * (adc_value);
-
     return voltage;
 }
 

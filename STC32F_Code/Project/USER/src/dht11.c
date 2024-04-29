@@ -76,7 +76,7 @@ void read_dht11() //定义一个读取DHT11返回的40bits的数据的函数
     RLL=readdht11_byte();//读取湿度的小数位
     CHH=readdht11_byte();//读取温度的整数位
     CLL=readdht11_byte();//读取温度的小数位
-   }  
+   }
 }
 
 void Trans()//将读取的温湿度转换成字符型
@@ -103,6 +103,11 @@ uint8 Threshold_Warning(float detected_value, float threshold_value)
 		return 1;
 	}
 	return 0;
+}
+
+void Print_Get_Data(void)
+{
+	printf("channels: %f, %f, %f\n", (CHH + (float)CLL / 10000), Smog_Get_Vol(), Press_Get_Vol());
 }
 
 // void main()

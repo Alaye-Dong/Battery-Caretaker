@@ -263,7 +263,7 @@ void Keystroke_Menu_HOME(void) // 0
         lcd_showfloat(14 * CHAR_SCREEN_WIDTH, 7, Smog_Get_Vol(), 4, 3);
 
         read_dht11(); // 读取DHT11的数值
-
+        Print_Get_Data();
         if (waring_on == 1)
         {
             if (Threshold_Warning(Temperature_Fusion(), threshold_temp))

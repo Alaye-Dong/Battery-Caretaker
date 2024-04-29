@@ -53,7 +53,6 @@ void main()
     {
         // 此处编写需要循环执行的代码
          Keystroke_Menu();
-
         // read_dht11(); // 读取DHT11的数值
         // Trans();
         // lcd_showint32(14 * 8, 5, CHH, 3);
